@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Ingredienti</title>
+    <th:block th:replace="~{fragments/resources :: headTags}"></th:block>
+</head>
+
+<body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="container mt-4">
+
+        <h1 class="mb-4">Ingredienti</h1>
+
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Nuovo ingrediente</h5>
+
+                <form th:action="@{/ingredients/create}" th:object="${ingredient}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Nome</label>
+                        <input class="form-control" th:field="*{name}" th:errorClass="is-invalid"
+                            placeholder="Es. Mozzarella">
+
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+                            <ul class="mb-0">
+                                <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Salva</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div th:if="${ingredients.empty}" class="alert alert-warning">
+            Nessun ingrediente inserito.
+        </div>
+
+        <table class="table table-striped" th:if="${!ingredients.empty}">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th class="text-end">AZIONI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ing : ${ingredients}">
+                    <td th:text="${ing.name}">Mozzarella</td>
+                    <td class="text-end">
+                        <form th:action="@{/ingredients/delete/{id}(id=${ing.id})}" method="post">
+                            <button class="btn btn-danger btn-sm" type="submit">
+                                Elimina
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </main>
+
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+</body>
+
+</html>

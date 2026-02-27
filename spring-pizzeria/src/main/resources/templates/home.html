@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>Home - MyApp</title>
+
+    <th:block th:replace="~{fragments/resources :: headTags}"></th:block> 
+
+</head>
+<body>
+
+    
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    
+    <div class="container mt-4">
+        <h1 class="mb-3">Benvenuto nella mia pizzeria</h1>
+        <p class="lead">
+            Questa è la homepage della pizzeria di ADL
+        </p>
+
+        <hr>
+
+        <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora iusto necessitatibus eum optio cum perspiciatis ducimus numquam beatae maiores eos, ex fugit eius voluptate itaque accusantium obcaecati facilis laudantium repellendus?
+        </p>
+
+        <a th:href="@{/about}" class="btn btn-primary">Scopri di più</a>
+    </div>
+
+    
+   <div th:replace="~{fragments/resources :: scripts}"></div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dettaglio Pizza</title>
+    <th:block th:replace="~{fragments/resources :: headTags}"></th:block>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container mt-5">
+
+        <div class="row justify-content-center">
+
+            <div class="col-12 col-md-8 col-lg-6">
+
+                <div class="card shadow-sm">
+
+
+                    <img th:src="${pizza.photo}" class="card-img-top" alt="Pizza"
+                        style="height: 300px; object-fit: cover;">
+
+
+                    <div class="card-body text-center">
+
+                        <h2 th:text="${pizza.name}"></h2>
+
+                        <p class="mt-3" th:text="${pizza.description}">
+
+                        </p>
+
+
+                        <p class="fw-bold mt-3" th:text="${pizza.price} + ' €'">
+
+                        </p>
+
+                        <div class="mt-4">
+                            <h5>Ingredienti</h5>
+
+                            <div th:if="${pizza.ingredients == null or pizza.ingredients.empty}" class="text-muted">
+                                Nessun ingrediente associato.
+                            </div>
+
+                            <ul class="list-group" th:if="${pizza.ingredients != null and !pizza.ingredients.empty}">
+                                <li class="list-group-item" th:each="ing : ${pizza.ingredients}" th:text="${ing.name}">
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <a th:href="@{/pizzas}" class="btn btn-secondary mt-3">
+                            Torna alla lista
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <h4 mb-4>Offerte speciali</h4>
+
+            <div class="mb-4">
+                <a class="btn btn-primary" th:href="@{/pizzas/{id}/deals/create(id=${pizza.id})}">
+                    Crea nuova offerta speciale
+                </a>
+            </div>
+
+            <div th:if="${pizza.deals == null or pizza.deals.empty}" class="alert alert-warning mb-4">
+                Nessuna offerta disponibile per questa pizza.
+            </div>
+
+            <ul class="list-group" th:if="${pizza.deals != null and !pizza.deals.empty}">
+                <li class="list-group-item d-flex justify-content-between align-items-center"
+                    th:each="deal : ${pizza.deals}">
+                    <div>
+                        <strong th:text="${deal.title}">Titolo</strong>
+                        <div class="text-muted">
+                            <span th:text="${deal.startDate}"></span>
+
+                            <span th:text="${deal.endDate}"></span>
+                        </div>
+                    </div>
+
+                    <a class="btn btn-success" th:href="@{/deals/edit/{id}(id=${deal.id})}">
+                        Modifica
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+
+</body>
+
+</html>

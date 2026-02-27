@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <head>
+        <title>Inserisci pizza</title>
+        <th:block th:replace="~{fragments/resources :: headTags}"></th:block>
+
+    <body>
+        <main class="container">
+            <div class="row">
+                <div class="col-12">
+                    <th:block>
+                        <h1 class="py-4 mb-2 text-center">
+                            Inserisci una nuova pizza
+                        </h1>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <form id="pizza-form" th:action="@{/pizzas/create}" th:object="${pizza}" method="post">
+
+
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="name">Nome della pizza</label>
+                                        <input class="form-control" type="text" id="name"
+                                            placeholder="Es: Pizza alle fragole" th:field="*{name}"
+                                            th:errorClass="is-invalid">
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+                                            <ul>
+                                                <li th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="description">Descrizione della pizza</label>
+                                        <textarea id="description" class="form-control"
+                                            placeholder="Breve descrizione della pizza"
+                                            th:field="*{description}"></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="photo">Foto</label>
+                                        <input class="form-control" type="text" id="photo"
+                                            placeholder="Inserisci URL della foto" th:field="*{photo}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="price">Prezzo della pizza</label>
+                                        <input class="form-control" type="number" min="0" id="price"
+                                            placeholder="€ 6.90" step="0.01" th:field="*{price}"
+                                            th:errorClass="is-invalid">
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}">
+                                            <ul>
+                                                <li th:each="error : ${#fields.errors('price')}" th:text="${error}">
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Ingredienti</label>
+
+                                        <div class="form-check" th:each="ing : ${ingredients}">
+                                            <input class="form-check-input" type="checkbox" th:field="*{ingredients}"
+                                                th:value="${ing.id}" th:id="${'ing_' + ing.id}">
+                                            <label class="form-check-label" th:for="${'ing_' + ing.id}"
+                                                th:text="${ing.name}">
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 d-flex justify-content-between">
+                                        <input type="submit" class="btn btn-primary" value="Crea una nuova pizza">
+                                        <input type="reset" class="btn btn-warning" value="Pulisci i campi">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- Scripts -->
+        <div th:replace="~{fragments/resources :: scripts}"></div>
+
+    </body>
+
+</html>
